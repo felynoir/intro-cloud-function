@@ -1,7 +1,18 @@
 const functions = require("firebase-functions");
-
+const express = require("express");
+const bodyParser = require("body-parser");
 const admin = require("firebase-admin");
 admin.initializeApp();
+
+const app = express();
+
+app.use(bodyParser.json());
+
+app.get("/hello-world", (req, res) => {
+  res.status(200).json("Hello world");
+});
+
+exports.api = functions.https.onRequest(app);
 
 // Take the text parameter passed to this HTTP endpoint and insert it into the
 // Realtime Database under the path /messages/:pushId/original
